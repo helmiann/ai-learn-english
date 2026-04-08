@@ -1,0 +1,136 @@
+# ============================================================
+#  ENGLISH GRAMMAR CHATBOT — .gitignore
+# ============================================================
+
+# ------------------------------------------------------------
+# ENVIRONMENT & SECRETS (JANGAN PERNAH DI-COMMIT!)
+# ------------------------------------------------------------
+.env
+.env.local
+.env.production
+.env.staging
+*.pem
+*.key
+secrets/
+
+# ------------------------------------------------------------
+# PYTHON
+# ------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+backend/venv/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+
+# Alembic (jangan ignore, tapi abaikan file temp)
+backend/db/migrations/versions/__pycache__/
+
+# ------------------------------------------------------------
+# NODE.JS / FRONTEND
+# ------------------------------------------------------------
+node_modules/
+frontend/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+frontend/dist/
+frontend/build/
+frontend/.vite/
+
+# Cache
+.npm
+.eslintcache
+.stylelintcache
+
+# ------------------------------------------------------------
+# LOGS (simpan folder, abaikan isinya)
+# ------------------------------------------------------------
+logs/app/*.log
+logs/nginx/*.log
+logs/**/*.log
+!logs/app/.gitkeep
+!logs/nginx/.gitkeep
+
+# ------------------------------------------------------------
+# DATABASE
+# ------------------------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+
+# ------------------------------------------------------------
+# DOCKER
+# ------------------------------------------------------------
+# Jangan ignore docker-compose, tapi abaikan override lokal
+docker-compose.override.yml
+
+# ------------------------------------------------------------
+# IDE & EDITOR
+# ------------------------------------------------------------
+# VSCode
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json.example
+
+# JetBrains
+.idea/
+*.iml
+
+# Vim / Emacs
+*.swp
+*.swo
+*~
+
+# ------------------------------------------------------------
+# OS
+# ------------------------------------------------------------
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+
+# ------------------------------------------------------------
+# LAINNYA
+# ------------------------------------------------------------
+*.bak
+*.tmp
+*.temp
+coverage/
+.nyc_output/
