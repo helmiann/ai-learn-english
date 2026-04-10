@@ -1,0 +1,54 @@
+# ============================================================
+#  ENGLISH GRAMMAR CHATBOT — Python Dependencies
+#  File: backend/requirements.txt
+#  Install: pip install -r requirements.txt
+# ============================================================
+
+# ----------------------------------------------------------
+# WEB FRAMEWORK
+# ----------------------------------------------------------
+fastapi==0.111.0
+uvicorn[standard]==0.30.1          # ASGI server dengan extras (websocket, dll)
+
+# ----------------------------------------------------------
+# DATABASE
+# ----------------------------------------------------------
+sqlalchemy==2.0.30                 # ORM
+alembic==1.13.1                    # Database migrations
+psycopg2-binary==2.9.11             # PostgreSQL driver
+
+# ----------------------------------------------------------
+# CACHE
+# ----------------------------------------------------------
+redis==5.0.4                       # Redis client
+#hiredis==2.3.2                     # Parser Redis lebih cepat (opsional tapi direkomendasikan)
+
+# ----------------------------------------------------------
+# AUTENTIKASI & KEAMANAN
+# ----------------------------------------------------------
+python-jose[cryptography]==3.3.0   # JWT encode/decode
+passlib[bcrypt]==1.7.4             # Password hashing
+python-multipart==0.0.9            # Form data (diperlukan FastAPI untuk login form)
+
+# ----------------------------------------------------------
+# VALIDASI & SETTINGS
+# ----------------------------------------------------------
+pydantic==2.10.6                   # Data validation (sudah include di FastAPI tapi pin versi)
+pydantic-settings==2.7.0           # Baca .env ke Pydantic model
+email-validator==2.1.1             # Validasi format email
+
+# ----------------------------------------------------------
+# HTTP CLIENT (untuk memanggil Llama API)
+# ----------------------------------------------------------
+httpx==0.27.0                      # Async HTTP client
+tenacity==8.3.0                    # Retry logic (untuk Llama API)
+
+# ----------------------------------------------------------
+# LOGGING
+# ----------------------------------------------------------
+loguru==0.7.2                      # Logger yang lebih mudah dipakai
+
+# ----------------------------------------------------------
+# UTILITY
+# ----------------------------------------------------------
+python-dotenv==1.0.1               # Load .env file (backup selain pydantic-settings)
