@@ -21,7 +21,7 @@ psycopg2-binary==2.9.11             # PostgreSQL driver
 # CACHE
 # ----------------------------------------------------------
 redis==5.0.4                       # Redis client
-#hiredis==2.3.2                     # Parser Redis lebih cepat (opsional tapi direkomendasikan)
+hiredis==2.3.2                     # Parser Redis lebih cepat (opsional tapi direkomendasikan)
 
 # ----------------------------------------------------------
 # AUTENTIKASI & KEAMANAN
@@ -33,8 +33,8 @@ python-multipart==0.0.9            # Form data (diperlukan FastAPI untuk login f
 # ----------------------------------------------------------
 # VALIDASI & SETTINGS
 # ----------------------------------------------------------
-pydantic==2.10.6                   # Data validation (sudah include di FastAPI tapi pin versi)
-pydantic-settings==2.7.0           # Baca .env ke Pydantic model
+pydantic==2.7.1                   # Data validation (sudah include di FastAPI tapi pin versi)
+pydantic-settings==2.3.0           # Baca .env ke Pydantic model
 email-validator==2.1.1             # Validasi format email
 
 # ----------------------------------------------------------
@@ -52,3 +52,14 @@ loguru==0.7.2                      # Logger yang lebih mudah dipakai
 # UTILITY
 # ----------------------------------------------------------
 python-dotenv==1.0.1               # Load .env file (backup selain pydantic-settings)
+
+# ----------------------------------------------------------
+# GRAMMAR CHECKER
+# ----------------------------------------------------------
+language-tool-python==2.7.1
+
+# ----------------------------------------------------------
+# LANGCHAIN
+# ----------------------------------------------------------
+langchain==0.2.6
+langchain-community==0.2.6

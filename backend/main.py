@@ -14,6 +14,7 @@ from core.logging import setup_logging
 from db.database import init_db
 from api.routes import auth, chat, history
 from infrastructure.redis_client import init_redis, close_redis
+from services.grammar_checker.grammar_checker_service import grammar_checker
 
 
 # ----------------------------------------------------------
@@ -25,11 +26,13 @@ async def lifespan(app: FastAPI):
     setup_logging()
     await init_db()
     await init_redis()
+    grammar_checker.initialize()
 
     yield
 
     # --- Shutdown ---
     await close_redis()
+    grammar_checker.close()
 
 
 # ----------------------------------------------------------
