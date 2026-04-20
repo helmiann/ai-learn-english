@@ -26,7 +26,7 @@ async def lifespan(app: FastAPI):
     setup_logging()
     await init_db()
     await init_redis()
-    grammar_checker.initialize()
+    #grammar_checker.initialize()
 
     yield
 
