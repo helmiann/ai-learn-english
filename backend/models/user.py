@@ -31,6 +31,14 @@ class User(Base):
         String(255),
         nullable=False,
     )
+    kelas: Mapped[str] = mapped_column(
+        String(20),
+        nullable=True,
+    )
+    sekolah: Mapped[str] = mapped_column(
+        String(100),
+        nullable=True,
+    )
 
     # ----------------------------------------------------------
     # RELASI

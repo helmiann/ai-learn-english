@@ -48,6 +48,8 @@ class UserService:
         user = User(
             username=user_data.username,
             password_hash=hash_password(user_data.password),
+            kelas=user_data.kelas,
+            sekolah=user_data.sekolah,
         )
         self.db.add(user)
         await self.db.commit()

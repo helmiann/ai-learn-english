@@ -64,3 +64,7 @@ language-tool-python==2.7.1
 # ----------------------------------------------------------
 langchain==0.2.6
 langchain-community==0.2.6
+
+langchain-groq==0.1.6
+
+bcrypt==4.0.1

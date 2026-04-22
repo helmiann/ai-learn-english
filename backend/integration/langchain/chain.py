@@ -7,7 +7,7 @@ import json
 from typing import List, Dict, Optional
 
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
-from langchain_community.chat_models import ChatOpenAI
+from langchain_groq import ChatGroq
 
 from core.config import settings
 from core.logging import logger
@@ -27,10 +27,9 @@ class GrammarChatChain:
     def __init__(self):
         # Llama API kompatibel dengan format OpenAI
         # sehingga bisa pakai ChatOpenAI dengan base_url custom
-        self.llm = ChatOpenAI(
+        self.llm = ChatGroq(
             model=settings.LLAMA_MODEL,
-            openai_api_key=settings.LLAMA_API_KEY,
-            openai_api_base=settings.LLAMA_API_URL,
+            groq_api_key=settings.LLAMA_API_KEY,
             max_tokens=settings.LLAMA_MAX_TOKENS,
             temperature=settings.LLAMA_TEMPERATURE,
         )

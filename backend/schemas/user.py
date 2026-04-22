@@ -3,17 +3,16 @@
 #  File: backend/schemas/user.py
 # ============================================================
 
+from typing import Optional
 from pydantic import BaseModel, field_validator
 
 
-# ----------------------------------------------------------
-# REQUEST — Data yang diterima dari frontend
-# ----------------------------------------------------------
 class UserCreate(BaseModel):
     """Schema untuk register akun baru."""
-
     username: str
     password: str
+    kelas: str
+    sekolah: str
 
     @field_validator("username")
     @classmethod
@@ -23,8 +22,6 @@ class UserCreate(BaseModel):
             raise ValueError("Username minimal 3 karakter")
         if len(v) > 50:
             raise ValueError("Username maksimal 50 karakter")
-        if not v.isalnum() and "_" not in v:
-            raise ValueError("Username hanya boleh huruf, angka, dan underscore")
         return v
 
     @field_validator("password")
@@ -34,24 +31,33 @@ class UserCreate(BaseModel):
             raise ValueError("Password minimal 6 karakter")
         return v
 
+    @field_validator("kelas")
+    @classmethod
+    def kelas_valid(cls, v: str) -> str:
+        v = v.strip()
+        mapping = {"7": "VII", "8": "VIII", "9": "IX"}
+        return mapping.get(v, v)
 
-# ----------------------------------------------------------
-# RESPONSE — Data yang dikirim ke frontend
-# ----------------------------------------------------------
+    @field_validator("sekolah")
+    @classmethod
+    def sekolah_valid(cls, v: str) -> str:
+        v = v.strip()
+        if len(v) < 3:
+            raise ValueError("Nama sekolah minimal 3 karakter")
+        return v
+
+
 class UserResponse(BaseModel):
     """Schema untuk menampilkan data user (tanpa password)."""
-
     id_user: int
     username: str
+    kelas: Optional[str] = None
+    sekolah: Optional[str] = None
 
     model_config = {"from_attributes": True}
 
 
-# ----------------------------------------------------------
-# TOKEN RESPONSE — Hasil login
-# ----------------------------------------------------------
 class TokenResponse(BaseModel):
-    """Schema untuk response login yang berisi JWT token."""
-
+    """Schema untuk response login."""
     access_token: str
     token_type: str = "bearer"

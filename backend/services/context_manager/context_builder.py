@@ -10,53 +10,57 @@ class ContextBuilder:
     """
     Merakit semua bagian konteks menjadi satu list messages
     yang siap dikirim ke Llama API.
-
-    Urutan konteks:
-    1. System prompt (instruksi untuk AI)
-    2. Ringkasan percakapan sebelumnya (jika ada)
-    3. Pesan-pesan terbaru yang dipilih
     """
 
-    # System prompt — instruksi utama untuk AI
     SYSTEM_PROMPT = (
         "Kamu adalah guru bahasa Inggris yang ramah dan sabar, "
-        "membantu siswa SMP belajar grammar bahasa Inggris. "
-        "Berikan penjelasan yang mudah dipahami, gunakan contoh sederhana, "
-        "dan berikan pujian untuk memotivasi siswa. "
-        "Selalu jawab dalam bahasa Indonesia yang mudah dimengerti, "
-        "tapi tunjukkan contoh kalimat dalam bahasa Inggris. "
-        "Fokus pada topik grammar seperti tenses, parts of speech, "
-        "sentence structure, dan lainnya yang sesuai level SMP."
+        "khusus membantu siswa SMP belajar grammar bahasa Inggris. \n\n"
+        "MATERI YANG BOLEH DIAJARKAN (hanya 4 topik ini):\n"
+        "1. Simple Present Tense — penggunaan, rumus, contoh kalimat\n"
+        "2. Simple Past Tense — penggunaan, rumus, contoh kalimat\n"
+        "3. Irregular Verbs — daftar kata kerja tidak beraturan beserta artinya\n"
+        "4. Imperative Sentences — kalimat perintah, larangan, dan permintaan\n\n"
+        "ATURAN PENTING:\n"
+        "- Jika siswa bertanya di luar 4 materi di atas, tolak dengan sopan "
+        "dan arahkan kembali ke salah satu dari 4 materi tersebut.\n"
+        "- Sesuaikan penjelasan dengan level SMP (mudah dipahami, tidak terlalu teknis).\n"
+        "- Selalu jawab dalam bahasa Indonesia yang mudah dimengerti.\n"
+        "- Tampilkan contoh kalimat dalam bahasa Inggris beserta artinya.\n"
+        "- Berikan pujian dan motivasi agar siswa semangat belajar.\n"
+        "- Jika siswa membuat kalimat yang salah, koreksi dengan sopan.\n"
     )
 
     def build(
         self,
         recent_messages: List[Dict[str, str]],
         summary: Optional[str] = None,
+        user_info: Optional[Dict] = None,
     ) -> List[Dict[str, str]]:
         """
         Rakit semua bagian menjadi list messages lengkap.
-
-        Returns:
-            List of dict {"role": "system"/"user"/"assistant", "content": ...}
         """
         context: List[Dict[str, str]] = []
 
-        # 1. System prompt selalu ada di awal
         system_content = self.SYSTEM_PROMPT
 
-        # 2. Tambahkan ringkasan jika ada
+        # Tambahkan info siswa jika ada
+        if user_info:
+            kelas = user_info.get("kelas", "")
+            sekolah = user_info.get("sekolah", "")
+            if kelas or sekolah:
+                system_content += (
+                    f"\nInfo siswa: Kelas {kelas}"
+                    f"{f' dari {sekolah}' if sekolah else ''}. "
+                    "Sesuaikan penjelasan dengan level kelasnya.\n"
+                )
+
+        # Tambahkan ringkasan jika ada
         if summary:
             system_content += (
-                f"\n\nRingkasan percakapan sebelumnya:\n{summary}"
+                f"\nRingkasan percakapan sebelumnya:\n{summary}\n"
             )
 
-        context.append({
-            "role": "system",
-            "content": system_content,
-        })
-
-        # 3. Tambahkan pesan-pesan terbaru
+        context.append({"role": "system", "content": system_content})
         context.extend(recent_messages)
 
         return context

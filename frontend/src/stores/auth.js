@@ -59,12 +59,12 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   // Register
-  async function register(username, password) {
+  async function register(username, password, kelas, sekolah) {
     loading.value = true
     error.value = null
 
     try {
-      await api.post('/auth/register', { username, password })
+      await api.post('/auth/register', { username, password, kelas, sekolah })
       return true
     } catch (err) {
       error.value = err.response?.data?.detail || 'Registrasi gagal'

@@ -1,0 +1,59 @@
+2026-04-20 06:33:43 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-20 06:33:43 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-20 06:33:47 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.
+2026-04-20 06:33:47 | INFO     | services.grammar_checker.grammar_checker_service:initialize:95 | Menginisialisasi LanguageTool...
+2026-04-20 06:36:36 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-20 06:36:36 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-20 06:36:41 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.
+2026-04-20 06:36:41 | INFO     | services.grammar_checker.grammar_checker_service:initialize:95 | Menginisialisasi LanguageTool...
+2026-04-20 06:37:28 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-20 06:37:28 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-20 06:37:32 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.
+2026-04-20 06:37:32 | INFO     | services.grammar_checker.grammar_checker_service:initialize:95 | Menginisialisasi LanguageTool...
+2026-04-20 06:37:57 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-20 06:37:57 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-20 06:38:01 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.
+2026-04-20 06:44:01 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-20 06:44:02 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-20 06:44:06 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.
+2026-04-20 06:44:40 | INFO     | services.user_service:create_user:55 | User baru dibuat: jalu
+2026-04-20 06:44:40 | INFO     | api.routes.auth:register:47 | User baru terdaftar: jalu
+2026-04-20 06:45:17 | INFO     | api.routes.auth:login:79 | Login berhasil: jalu
+2026-04-20 06:49:43 | INFO     | api.routes.auth:login:79 | Login berhasil: jalu
+2026-04-20 06:50:25 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=1 user=1
+2026-04-20 06:51:13 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=1 pesan=1 ada_summary=False
+2026-04-20 06:51:15 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=395
+2026-04-20 06:51:15 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=1 token=395
+2026-04-20 06:51:15 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=1 user=1
+2026-04-20 06:52:55 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=1 user=1
+2026-04-20 19:41:10 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-20 19:41:11 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-20 19:41:15 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.
+2026-04-20 19:43:09 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-20 19:43:11 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-20 19:43:15 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.
+2026-04-20 19:46:14 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-20 19:46:15 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-20 19:46:19 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.
+2026-04-20 19:46:19 | INFO     | services.grammar_checker.grammar_checker_service:initialize:95 | Menginisialisasi LanguageTool...
+2026-04-20 19:46:40 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-20 19:46:40 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-20 19:46:44 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.
+2026-04-20 19:47:20 | INFO     | services.user_service:create_user:55 | User baru dibuat: kali
+2026-04-20 19:47:20 | INFO     | api.routes.auth:register:47 | User baru terdaftar: kali
+2026-04-20 19:47:34 | INFO     | api.routes.auth:login:79 | Login berhasil: kali
+2026-04-20 19:47:41 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=2 user=2
+2026-04-20 19:47:41 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=2 user=2
+2026-04-20 19:47:42 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=2 pesan=1 ada_summary=False
+2026-04-20 19:47:42 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=2 user=2
+2026-04-20 19:47:45 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=495
+2026-04-20 19:47:45 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=2 token=495
+2026-04-20 19:47:45 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=2 user=2
+2026-04-20 19:48:10 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=2 pesan=3 ada_summary=False
+2026-04-20 19:48:13 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=833
+2026-04-20 19:48:14 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=2 token=833
+2026-04-20 19:48:14 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=2 user=2
+2026-04-20 19:48:55 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=2 pesan=5 ada_summary=False
+2026-04-20 19:48:59 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=1152
+2026-04-20 19:48:59 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=2 token=1152
+2026-04-20 19:48:59 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=2 user=2
