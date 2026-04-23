@@ -94,11 +94,10 @@ const messagesArea = ref(null)
 
 // Rekomendasi topik default
 const defaultRecommendations = ref([
-  'Belajar Present Tense',
-  'Belajar Past Tense',
-  'Belajar Future Tense',
-  'Parts of Speech',
-  'Sentence Structure',
+  'Simple Present Tense',
+  'Simple Past Tense',
+  'Irregular Verbs',
+  'Imperative Sentences',
 ])
 
 // ----------------------------------------------------------
@@ -152,7 +151,13 @@ async function handleSendMessage(content) {
 // Pilih rekomendasi → langsung kirim sebagai pesan
 // ----------------------------------------------------------
 async function handleSelectRecommendation(topic) {
-  await handleSendMessage(`Aku ingin belajar tentang ${topic}`)
+  const messages = {
+    'Simple Present Tense': 'Halo! Aku ingin belajar Simple Present Tense. Bisa jelaskan rumus dan contohnya?',
+    'Simple Past Tense': 'Halo! Aku ingin belajar Simple Past Tense. Bisa jelaskan rumus dan contohnya?',
+    'Irregular Verbs': 'Halo! Aku ingin belajar Irregular Verbs. Bisa tunjukkan daftarnya dan cara penggunaannya?',
+    'Imperative Sentences': 'Halo! Aku ingin belajar Imperative Sentences. Bisa jelaskan cara membuatnya?',
+  }
+  await handleSendMessage(messages[topic] || `Aku ingin belajar ${topic}`)
 }
 
 // ----------------------------------------------------------

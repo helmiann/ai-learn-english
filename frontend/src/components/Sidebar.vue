@@ -88,10 +88,12 @@ defineProps({
 defineEmits(['close'])
 
 async function handleNewChat() {
-  const chat = await chatStore.createChat()
-  if (chat) {
-    router.push({ name: 'ChatDetail', params: { id: chat.id_chats } })
-  }
+  // Reset ke halaman chat tanpa membuka chat tertentu
+  // agar rekomendasi muncul dulu sebelum mulai percakapan
+  chatStore.currentChatId = null
+  chatStore.messages = []
+  router.push({ name: 'Chat' })
+  emit('close')
 }
 
 async function handleOpenChat(chatId) {

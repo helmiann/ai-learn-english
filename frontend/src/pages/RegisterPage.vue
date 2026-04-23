@@ -3,7 +3,7 @@
     <div class="login-box">
 
       <h1 class="login-title">Daftar Akun<br/>Baru</h1>
-      <p class="login-subtitle">Buat akun untuk mulai belajar</p>
+      <p class="login-subtitle">Buat akun untuk mulai belajar grammar</p>
 
       <div class="login-form">
 
@@ -12,7 +12,6 @@
           type="text"
           placeholder="username"
           class="input-field"
-          @keyup.enter="handleRegister"
         />
 
         <input
@@ -20,7 +19,6 @@
           type="password"
           placeholder="password"
           class="input-field"
-          @keyup.enter="handleRegister"
         />
 
         <input
@@ -28,7 +26,22 @@
           type="password"
           placeholder="konfirmasi password"
           class="input-field"
-          @keyup.enter="handleRegister"
+        />
+
+        <!-- Pilihan Kelas -->
+        <select v-model="form.kelas" class="input-field select-field">
+          <option value="" disabled>pilih kelas</option>
+          <option value="VII">Kelas VII</option>
+          <option value="VIII">Kelas VIII</option>
+          <option value="IX">Kelas IX</option>
+        </select>
+
+        <!-- Input Sekolah -->
+        <input
+          v-model="form.sekolah"
+          type="text"
+          placeholder="nama sekolah"
+          class="input-field"
         />
 
         <p v-if="errorMsg" class="error-message">{{ errorMsg }}</p>
@@ -40,10 +53,12 @@
           @click="handleRegister"
         >
           <span v-if="authStore.loading">Mendaftar...</span>
-          <span v-else>sign in</span>
+          <span v-else>daftar</span>
         </button>
 
-        <p class="register-link" @click="goToLogin">log in</p>
+        <p class="register-link" @click="goToLogin">
+          Sudah punya akun? <strong>log in</strong>
+        </p>
 
       </div>
     </div>
@@ -62,6 +77,8 @@ const form = reactive({
   username: '',
   password: '',
   confirmPassword: '',
+  kelas: '',
+  sekolah: '',
 })
 
 const errorMsg = ref('')
@@ -72,16 +89,28 @@ async function handleRegister() {
   successMsg.value = ''
 
   if (!form.username || !form.password || !form.confirmPassword) {
-    errorMsg.value = 'Semua kolom harus diisi'
+    errorMsg.value = 'Username dan password harus diisi'
     return
   }
-
   if (form.password !== form.confirmPassword) {
     errorMsg.value = 'Password tidak cocok'
     return
   }
+  if (!form.kelas) {
+    errorMsg.value = 'Kelas harus dipilih'
+    return
+  }
+  if (!form.sekolah.trim()) {
+    errorMsg.value = 'Nama sekolah harus diisi'
+    return
+  }
 
-  const success = await authStore.register(form.username, form.password)
+  const success = await authStore.register(
+    form.username,
+    form.password,
+    form.kelas,
+    form.sekolah,
+  )
 
   if (success) {
     successMsg.value = 'Akun berhasil dibuat! Mengarahkan ke login...'
@@ -104,6 +133,7 @@ function goToLogin() {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: auto;
 }
 
 .login-box {
@@ -112,7 +142,7 @@ function goToLogin() {
   align-items: center;
   width: 100%;
   max-width: 480px;
-  padding: 0 32px;
+  padding: 32px;
   gap: 12px;
 }
 
@@ -150,15 +180,20 @@ function goToLogin() {
   transition: var(--transition);
 }
 
-.input-field::placeholder {
-  color: var(--text-secondary);
-  opacity: 0.8;
-}
-
 .input-field:focus {
   outline: none;
   border-color: var(--accent-hover);
   box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.select-field {
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-field option {
+  background-color: #c084fc;
+  color: #1a001f;
 }
 
 .btn-primary {
@@ -177,7 +212,6 @@ function goToLogin() {
 
 .btn-primary:hover:not(:disabled) {
   background-color: var(--accent-hover);
-  transform: translateY(-1px);
 }
 
 .btn-primary:disabled {
