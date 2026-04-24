@@ -57,3 +57,41 @@
 2026-04-20 19:48:59 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=1152
 2026-04-20 19:48:59 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=2 token=1152
 2026-04-20 19:48:59 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=2 user=2
+2026-04-24 05:48:28 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-24 05:48:29 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-24 05:48:33 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.
+2026-04-24 05:53:31 | INFO     | services.user_service:create_user:57 | User baru dibuat: haji
+2026-04-24 05:53:31 | INFO     | api.routes.auth:register:47 | User baru terdaftar: haji
+2026-04-24 05:53:40 | INFO     | api.routes.auth:login:79 | Login berhasil: haji
+2026-04-24 05:55:21 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=3 user=3
+2026-04-24 05:55:21 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=3 user=3
+2026-04-24 05:55:21 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=3 user=3
+2026-04-24 05:55:21 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=3 pesan=1 ada_summary=False
+2026-04-24 05:55:23 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=538
+2026-04-24 05:55:23 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=3 token=538
+2026-04-24 05:55:23 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=3 user=3
+2026-04-24 05:57:39 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=3 user=3
+2026-04-24 05:57:59 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=4 user=3
+2026-04-24 05:57:59 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=4 user=3
+2026-04-24 05:57:59 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=4 user=3
+2026-04-24 05:58:24 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=4 user=3
+2026-04-24 06:03:37 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=4 user=3
+2026-04-24 06:03:40 | INFO     | services.chat_service:delete_chat:154 | Chat dihapus: id=4
+2026-04-24 06:03:40 | INFO     | api.routes.chat:delete_chat:134 | Chat dihapus: id=4 user=3
+2026-04-24 06:03:51 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=3 user=3
+2026-04-24 06:03:51 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=3 user=3
+2026-04-24 06:03:54 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=5 user=3
+2026-04-24 06:03:54 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=5 user=3
+2026-04-24 06:03:54 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=5 user=3
+2026-04-24 06:03:54 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=5 pesan=1 ada_summary=False
+2026-04-24 06:03:57 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=727
+2026-04-24 06:03:57 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=5 token=727
+2026-04-24 06:03:57 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=5 user=3
+2026-04-24 06:04:33 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=5 pesan=3 ada_summary=False
+2026-04-24 06:04:36 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=1296
+2026-04-24 06:04:36 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=5 token=1296
+2026-04-24 06:04:36 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=5 user=3
+2026-04-24 06:05:15 | INFO     | api.routes.auth:login:79 | Login berhasil: haji
+2026-04-24 10:21:56 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-24 10:21:56 | INFO     | db.database:init_db:60 | Database berhasil diinisialisasi.
+2026-04-24 10:22:00 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error connecting to localhost:6379. Multiple exceptions: [Errno 10061] Connect call failed ('::1', 6379, 0, 0), [Errno 10061] Connect call failed ('127.0.0.1', 6379).. Aplikasi tetap berjalan tanpa cache.

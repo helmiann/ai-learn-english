@@ -189,13 +189,21 @@ function goToLogin() {
 .select-field {
   appearance: none;
   cursor: pointer;
+  background-color: var(--bg-primary);  /* ← pastikan ada ini */
 }
 
+/* Styling untuk dropdown list */
 .select-field option {
   background-color: #c084fc;
   color: #1a001f;
+  font-size: 16px;
+  padding: 16px;           /* ← tambah padding */
+  min-height: 44px;        /* ← tinggi minimum */
 }
 
+.select-field option:hover {
+  background-color: #d500fa;
+}
 .btn-primary {
   width: 100%;
   padding: 16px;

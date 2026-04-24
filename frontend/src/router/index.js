@@ -42,14 +42,33 @@ const routes = [
     path: '/:pathMatch(.*)*',
     redirect: '/chat',
   },
-]
+  {
+  path: '/pre-test',
+  name: 'PreTest',
+  component: () => import('@/pages/PreTestPage.vue'),
+  meta: { requiresAuth: true },
+  },
+  {
+    path: '/post-test',
+    name: 'PostTest',
+    component: () => import('@/pages/PostTestPage.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/kuesioner',
+    name: 'Kuesioner',
+    component: () => import('@/pages/KuesionerPage.vue'),
+    meta: { requiresAuth: true },
+  },
 
-// ----------------------------------------------------------
-// ROUTER INSTANCE
-// ----------------------------------------------------------
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  ]
+
+  // ----------------------------------------------------------
+  // ROUTER INSTANCE
+  // ----------------------------------------------------------
+  const router = createRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes,
 })
 
 // ----------------------------------------------------------
