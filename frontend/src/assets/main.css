@@ -7,22 +7,22 @@
    CSS VARIABLES — Warna tema
    ---------------------------------------------------------- */
 :root {
-  --bg-primary: #c084fc;        /* Ungu muda — background utama */
-  --bg-secondary: #a855f7;      /* Ungu sedang — sidebar */
-  --bg-sidebar: #b060f5;        /* Ungu sidebar */
-  --accent: #d500fa;            /* Magenta — bubble user, tombol */
-  --accent-hover: #bb00de;      /* Magenta gelap — hover */
-  --accent-light: #e040fb33;    /* Magenta transparan — border */
+  --bg-primary: #f2e7fd;        /* Ungu muda — background utama */
+  --bg-secondary: #cc9df8;      /* Ungu sedang — sidebar */
+  --bg-sidebar: #cd9ff8;        /* Ungu sidebar */
+  --accent: #c765d8;            /* Magenta — bubble user, tombol */
+  --accent-hover: #b161c0;      /* Magenta gelap — hover */
+  --accent-light: #e981fb33;    /* Magenta transparan — border */
 
-  --text-primary: #1a001f;      /* Hitam keunguan — teks utama */
-  --text-secondary: #3d0050;    /* Ungu gelap — teks sekunder */
+  --text-primary: #000000;      /* Hitam keunguan — teks utama */
+  --text-secondary: #1d0125;    /* Ungu gelap — teks sekunder */
   --text-light: #f5e6ff;        /* Putih keunguan — teks di atas magenta */
 
-  --bubble-user-bg: #d500fa;    /* Background bubble user */
+  --bubble-user-bg: #ee8eff;    /* Background bubble user */
   --bubble-ai-bg: transparent;  /* Background bubble AI */
 
-  --input-bg: #d500fa;          /* Background input bar */
-  --input-border: #e040fb;      /* Border input */
+  --input-bg: #e255fa;          /* Background input bar */
+  --input-border: #e574f9;      /* Border input */
 
   --border-radius-sm: 12px;
   --border-radius-md: 20px;
