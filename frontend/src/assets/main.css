@@ -52,7 +52,7 @@ html,
 body {
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow: hidden;  /* tetap hidden, dihandle per halaman */
 }
 
 body {
@@ -63,10 +63,24 @@ body {
   line-height: 1.5;
 }
 
+.result-area {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;  /* ganti dari center ke flex-start */
+  justify-content: center;
+  padding: 20px 0 40px;     /* tambah padding bawah */
+}
+
 #app {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+}
+
+.scrollable-page {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* ----------------------------------------------------------

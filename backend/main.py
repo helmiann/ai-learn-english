@@ -15,6 +15,7 @@ from db.database import init_db
 from api.routes import auth, chat, history
 from infrastructure.redis_client import init_redis, close_redis
 from services.grammar_checker.grammar_checker_service import grammar_checker
+from api.routes import auth, chat, history, test
 
 
 # ----------------------------------------------------------
@@ -24,7 +25,7 @@ from services.grammar_checker.grammar_checker_service import grammar_checker
 async def lifespan(app: FastAPI):
     # --- Startup ---
     setup_logging()
-    await init_db()
+    #await init_db()
     await init_redis()
     #grammar_checker.initialize()
 
@@ -89,6 +90,17 @@ app.include_router(
     history.router,
     prefix="/api/history",
     tags=["History"],
+)
+
+app.include_router(
+    test.router,
+    prefix="/api/test",
+    tags=["Test"],
+)
+app.include_router(
+    test.router,
+    prefix="/api/survey",
+    tags=["Survey"],
 )
 
 

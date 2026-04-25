@@ -9,24 +9,20 @@
     />
 
     <!-- Sidebar -->
-    <Sidebar
-      :is-open="sidebarOpen"
-      @close="sidebarOpen = false"
-    />
+    <Sidebar :is-open="sidebarOpen" @close="sidebarOpen = false" />
 
     <!-- Topbar -->
     <div class="topbar">
-      <!-- Tombol hamburger (buka sidebar) -->
       <button class="icon-btn hamburger-btn" @click="sidebarOpen = true">
         <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
           <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
         </svg>
       </button>
 
-      <!-- Tombol akun -->
-      <button class="akun-btn" @click="handleLogout">
-        akun
-      </button>
+      <!-- Avatar dengan huruf awal username -->
+      <div class="user-avatar" @click="sidebarOpen = true">
+        {{ userInitial }}
+      </div>
     </div>
 
     <!-- Area konten utama -->
@@ -34,6 +30,7 @@
 
       <!-- Tampilan awal — belum ada chat aktif -->
       <div v-if="!chatStore.currentChatId" class="welcome-area">
+        <p class="welcome-text">Pilih topik untuk mulai belajar:</p>
         <div class="recommendations">
           <RecommendationCard
             v-for="(rec, i) in defaultRecommendations"
@@ -53,9 +50,9 @@
           :contents="msg.contents"
         />
 
-        <!-- Loading indicator saat AI sedang menjawab -->
+        <!-- Typing indicator -->
         <div v-if="chatStore.loading" class="bubble-wrapper ai">
-          <div class="bubble ai-bubble typing">
+          <div class="typing">
             <span></span><span></span><span></span>
           </div>
         </div>
@@ -64,16 +61,13 @@
     </div>
 
     <!-- Input bar -->
-    <ChatInput
-      :loading="chatStore.loading"
-      @send="handleSendMessage"
-    />
+    <ChatInput :loading="chatStore.loading" @send="handleSendMessage" />
 
   </div>
 </template>
 
 <script setup>
-import { ref, watch, nextTick, onMounted } from 'vue'
+import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { useChatStore } from '@/stores/chat'
@@ -92,7 +86,12 @@ const authStore = useAuthStore()
 const sidebarOpen = ref(false)
 const messagesArea = ref(null)
 
-// Rekomendasi topik default
+// Huruf awal username untuk avatar
+const userInitial = computed(() => {
+  const name = authStore.username || '?'
+  return name.charAt(0).toUpperCase()
+})
+
 const defaultRecommendations = ref([
   'Simple Present Tense',
   'Simple Past Tense',
@@ -100,30 +99,19 @@ const defaultRecommendations = ref([
   'Imperative Sentences',
 ])
 
-// ----------------------------------------------------------
-// Load data saat halaman dibuka
-// ----------------------------------------------------------
 onMounted(async () => {
   await chatStore.fetchChats()
-
-  // Kalau URL punya chat id, buka chat tersebut
   if (route.params.id) {
     await chatStore.openChat(Number(route.params.id))
   }
 })
 
-// ----------------------------------------------------------
-// Watch perubahan route (pindah chat)
-// ----------------------------------------------------------
 watch(() => route.params.id, async (newId) => {
   if (newId) {
     await chatStore.openChat(Number(newId))
   }
 })
 
-// ----------------------------------------------------------
-// Auto scroll ke bawah saat ada pesan baru
-// ----------------------------------------------------------
 watch(() => chatStore.messages.length, async () => {
   await nextTick()
   if (messagesArea.value) {
@@ -131,25 +119,15 @@ watch(() => chatStore.messages.length, async () => {
   }
 })
 
-// ----------------------------------------------------------
-// Kirim pesan
-// ----------------------------------------------------------
 async function handleSendMessage(content) {
-  // Kalau belum ada chat aktif, buat dulu
   if (!chatStore.currentChatId) {
-    const chat = await chatStore.createChat(
-      content.slice(0, 50)  // Judul dari awal pesan
-    )
+    const chat = await chatStore.createChat(content.slice(0, 50))
     if (!chat) return
     router.push({ name: 'ChatDetail', params: { id: chat.id_chats } })
   }
-
   await chatStore.sendMessage(content)
 }
 
-// ----------------------------------------------------------
-// Pilih rekomendasi → langsung kirim sebagai pesan
-// ----------------------------------------------------------
 async function handleSelectRecommendation(topic) {
   const messages = {
     'Simple Present Tense': 'Halo! Aku ingin belajar Simple Present Tense. Bisa jelaskan rumus dan contohnya?',
@@ -158,15 +136,6 @@ async function handleSelectRecommendation(topic) {
     'Imperative Sentences': 'Halo! Aku ingin belajar Imperative Sentences. Bisa jelaskan cara membuatnya?',
   }
   await handleSendMessage(messages[topic] || `Aku ingin belajar ${topic}`)
-}
-
-// ----------------------------------------------------------
-// Logout
-// ----------------------------------------------------------
-function handleLogout() {
-  authStore.logout()
-  chatStore.reset()
-  router.push({ name: 'Login' })
 }
 </script>
 
@@ -181,7 +150,6 @@ function handleLogout() {
   position: relative;
 }
 
-/* Overlay gelap saat sidebar terbuka */
 .sidebar-overlay {
   position: fixed;
   inset: 0;
@@ -217,22 +185,30 @@ function handleLogout() {
   background-color: var(--accent);
 }
 
-.akun-btn {
-  padding: 8px 20px;
+/* Avatar huruf awal username */
+.user-avatar {
+  width: 44px;
+  height: 44px;
   border-radius: var(--border-radius-full);
-  background-color: transparent;
-  border: 2px solid var(--accent);
+  background-color: var(--accent);
+  border: 2px solid var(--accent-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
   color: var(--text-primary);
-  font-size: 14px;
   cursor: pointer;
   transition: var(--transition);
+  user-select: none;
 }
 
-.akun-btn:hover {
-  background-color: var(--accent);
+.user-avatar:hover {
+  background-color: var(--accent-hover);
+  transform: scale(1.05);
 }
 
-/* Area konten utama */
+/* Area konten */
 .chat-main {
   flex: 1;
   overflow: hidden;
@@ -240,13 +216,20 @@ function handleLogout() {
   flex-direction: column;
 }
 
-/* Area rekomendasi (halaman awal) */
+/* Welcome area */
 .welcome-area {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 24px 20px;
+  gap: 16px;
+}
+
+.welcome-text {
+  font-size: 15px;
+  color: var(--text-secondary);
+  text-align: center;
 }
 
 .recommendations {
@@ -276,15 +259,6 @@ function handleLogout() {
 
 .bubble-wrapper.ai {
   justify-content: flex-start;
-}
-
-.bubble {
-  padding: 14px 20px;
-  border-radius: var(--border-radius-lg);
-}
-
-.ai-bubble {
-  background-color: transparent;
 }
 
 .typing {

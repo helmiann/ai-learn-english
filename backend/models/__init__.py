@@ -7,6 +7,8 @@ from models.chats import Chat
 from models.chat_messages import ChatMessage
 from models.chat_summary import ChatSummary
 from models.context_metadata import ContextMetadata
+from models.test_results import TestResult
+from models.survey_results import SurveyResult
 
 __all__ = [
     "Base",
@@ -15,4 +17,6 @@ __all__ = [
     "ChatMessage",
     "ChatSummary",
     "ContextMetadata",
+    "TestResult",
+    "SurveyResult",
 ]

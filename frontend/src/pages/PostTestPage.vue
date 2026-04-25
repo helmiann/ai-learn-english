@@ -1,80 +1,77 @@
 <template>
-  <div class="test-container">
+  <div class="scrollable-page">
+    <div class="test-container">
 
-    <!-- Header -->
-    <div class="test-header">
-      <h1 class="test-title">Post-Test</h1>
-      <p class="test-subtitle">Grammar Bahasa Inggris — SMP</p>
-      <div class="test-info">
-        <span>{{ currentIndex + 1 }} / {{ questions.length }} soal</span>
-        <span class="section-badge">{{ currentQuestion.section }}</span>
-      </div>
-      <div class="progress-bar">
-        <div
-          class="progress-fill"
-          :style="{ width: `${((currentIndex + 1) / questions.length) * 100}%` }"
-        />
-      </div>
-    </div>
-
-    <!-- Soal -->
-    <div v-if="!showResult" class="question-area">
-      <p class="question-text">{{ currentQuestion.question }}</p>
-
-      <div class="options-list">
-        <button
-          v-for="(option, i) in currentQuestion.options"
-          :key="i"
-          class="option-btn"
-          :class="{ selected: answers[currentQuestion.id] === option }"
-          @click="selectAnswer(option)"
-        >
-          <span class="option-label">{{ ['A', 'B', 'C', 'D'][i] }}</span>
-          <span class="option-text">{{ option }}</span>
-        </button>
+      <!-- Header -->
+      <div class="test-header">
+        <h1 class="test-title">Post-Test</h1>
+        <p class="test-subtitle">Grammar Bahasa Inggris — SMP</p>
+        <div class="test-info">
+          <span>{{ currentIndex + 1 }} / {{ questions.length }} soal</span>
+          <span class="section-badge">{{ currentQuestion.section }}</span>
+        </div>
+        <div class="progress-bar">
+          <div
+            class="progress-fill"
+            :style="{ width: `${((currentIndex + 1) / questions.length) * 100}%` }"
+          />
+        </div>
       </div>
 
-      <div class="nav-buttons">
-        <button
-          class="nav-btn prev-btn"
-          :disabled="currentIndex === 0"
-          @click="prevQuestion"
-        >
-          ← Sebelumnya
-        </button>
-        <button
-          v-if="currentIndex < questions.length - 1"
-          class="nav-btn next-btn"
-          :disabled="!answers[currentQuestion.id]"
-          @click="nextQuestion"
-        >
-          Selanjutnya →
-        </button>
-        <button
-          v-else
-          class="nav-btn submit-btn"
-          :disabled="!isAllAnswered"
-          @click="submitTest"
-        >
-          Selesai ✓
-        </button>
+      <!-- Soal -->
+      <div v-if="!showResult" class="question-area">
+        <p class="question-text">{{ currentQuestion.question }}</p>
+
+        <div class="options-list">
+          <button
+            v-for="(option, i) in currentQuestion.options"
+            :key="i"
+            class="option-btn"
+            :class="{ selected: answers[currentQuestion.id] === option }"
+            @click="selectAnswer(option)"
+          >
+            <span class="option-label">{{ ['A', 'B', 'C', 'D'][i] }}</span>
+            <span class="option-text">{{ option }}</span>
+          </button>
+        </div>
+
+        <div class="nav-buttons">
+          <button class="nav-btn prev-btn" :disabled="currentIndex === 0" @click="prevQuestion">
+            ← Sebelumnya
+          </button>
+          <button
+            v-if="currentIndex < questions.length - 1"
+            class="nav-btn next-btn"
+            :disabled="!answers[currentQuestion.id]"
+            @click="nextQuestion"
+          >
+            Selanjutnya →
+          </button>
+          <button
+            v-else
+            class="nav-btn submit-btn"
+            :disabled="!isAllAnswered"
+            @click="submitTest"
+          >
+            Selesai ✓
+          </button>
+        </div>
+
+        <div class="question-dots">
+          <span
+            v-for="(q, i) in questions"
+            :key="q.id"
+            class="dot"
+            :class="{ answered: answers[q.id], current: i === currentIndex }"
+            @click="goToQuestion(i)"
+          />
+        </div>
       </div>
 
-      <div class="question-dots">
-        <span
-          v-for="(q, i) in questions"
-          :key="q.id"
-          class="dot"
-          :class="{ answered: answers[q.id], current: i === currentIndex }"
-          @click="goToQuestion(i)"
-        />
-      </div>
-    </div>
+      <!-- Hasil -->
+      <div v-else class="result-area">
 
-    <!-- Hasil dengan perbandingan pre-test -->
-    <div v-else class="result-area">
-      <div class="result-card">
-
+        <!-- Perbandingan -->
         <div class="score-comparison">
           <div class="score-box">
             <span class="score-box-label">Pre-Test</span>
@@ -92,15 +89,9 @@
           class="improvement"
           :class="result.score >= preTestScore ? 'positive' : 'negative'"
         >
-          <span v-if="result.score > preTestScore">
-            ↑ Naik {{ result.score - preTestScore }} poin 🎉
-          </span>
-          <span v-else-if="result.score === preTestScore">
-            = Nilai sama seperti pre-test
-          </span>
-          <span v-else>
-            ↓ Turun {{ preTestScore - result.score }} poin
-          </span>
+          <span v-if="result.score > preTestScore">↑ Naik {{ result.score - preTestScore }} poin 🎉</span>
+          <span v-else-if="result.score === preTestScore">= Nilai sama seperti pre-test</span>
+          <span v-else>↓ Turun {{ preTestScore - result.score }} poin</span>
         </div>
 
         <h2 class="result-title">Post-Test Selesai!</h2>
@@ -134,9 +125,7 @@
             <p class="exp-question">{{ q.id }}. {{ q.question }}</p>
             <p class="exp-answer">
               Jawabanmu: <strong>{{ answers[q.id] }}</strong>
-              <span v-if="answers[q.id] !== q.answer">
-                | Jawaban benar: <strong>{{ q.answer }}</strong>
-              </span>
+              <span v-if="answers[q.id] !== q.answer"> | Benar: <strong>{{ q.answer }}</strong></span>
               <span v-else> ✓</span>
             </p>
             <p class="exp-text">{{ q.explanation }}</p>
@@ -149,7 +138,6 @@
 
       </div>
     </div>
-
   </div>
 </template>
 
@@ -176,31 +164,17 @@ onMounted(async () => {
   try {
     const response = await api.get('/test/pre-test/result')
     preTestScore.value = response.data.score
-  } catch {
-    // Pre-test belum ada
-  }
+  } catch { /* pre-test belum ada */ }
 })
 
-function selectAnswer(option) {
-  answers.value[currentQuestion.value.id] = option
-}
-
-function nextQuestion() {
-  if (currentIndex.value < questions.length - 1) currentIndex.value++
-}
-
-function prevQuestion() {
-  if (currentIndex.value > 0) currentIndex.value--
-}
-
-function goToQuestion(index) {
-  currentIndex.value = index
-}
+function selectAnswer(option) { answers.value[currentQuestion.value.id] = option }
+function nextQuestion() { if (currentIndex.value < questions.length - 1) currentIndex.value++ }
+function prevQuestion() { if (currentIndex.value > 0) currentIndex.value-- }
+function goToQuestion(index) { currentIndex.value = index }
 
 async function submitTest() {
   result.value = calculateScore(answers.value)
   sectionScores.value = calculateScoreBySection(answers.value)
-
   try {
     await api.post('/test/post-test', {
       answers: answers.value,
@@ -208,274 +182,99 @@ async function submitTest() {
       correct: result.value.correct,
       total: result.value.total,
     })
-  } catch (err) {
-    console.error('Gagal simpan hasil post-test:', err)
-  }
-
+  } catch (err) { console.error('Gagal simpan post-test:', err) }
   showResult.value = true
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-function goToKuesioner() {
-  router.push({ name: 'Kuesioner' })
-}
+function goToKuesioner() { router.push({ name: 'Kuesioner' }) }
 </script>
 
 <style scoped>
-.test-container {
-  width: 100vw;
+.page-wrapper {
+  width: 100%;
   min-height: 100vh;
   background-color: var(--bg-primary);
-  display: flex;
-  flex-direction: column;
-  padding: 20px 16px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.test-header { margin-bottom: 24px; }
-
-.test-title {
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.test-subtitle {
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-}
-
-.test-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-.section-badge {
-  background-color: var(--accent);
-  padding: 4px 12px;
-  border-radius: var(--border-radius-full);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.progress-bar {
+.test-container {
   width: 100%;
-  height: 8px;
-  background-color: var(--accent-light);
-  border-radius: var(--border-radius-full);
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: var(--accent);
-  transition: width 0.3s ease;
-}
-
-.question-area {
-  flex: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 16px 80px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
-.question-text {
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 1.6;
-  background-color: var(--bg-secondary);
-  padding: 16px 20px;
-  border-radius: var(--border-radius-md);
-}
+.test-header { display: flex; flex-direction: column; gap: 8px; }
+.test-title { font-size: 26px; font-weight: 700; }
+.test-subtitle { font-size: 14px; color: var(--text-secondary); }
+.test-info { display: flex; align-items: center; justify-content: space-between; font-size: 14px; }
+.section-badge { background-color: var(--accent); padding: 4px 12px; border-radius: var(--border-radius-full); font-size: 12px; font-weight: 600; }
+.progress-bar { width: 100%; height: 8px; background-color: var(--accent-light); border-radius: var(--border-radius-full); overflow: hidden; }
+.progress-fill { height: 100%; background-color: var(--accent); transition: width 0.3s ease; }
 
-.options-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+.question-area { display: flex; flex-direction: column; gap: 16px; }
+.question-text { font-size: 17px; font-weight: 600; line-height: 1.6; background-color: var(--bg-secondary); padding: 16px 20px; border-radius: var(--border-radius-md); }
+.options-list { display: flex; flex-direction: column; gap: 10px; }
 
 .option-btn {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  background-color: transparent;
-  border: 2px solid var(--accent);
-  border-radius: var(--border-radius-md);
-  color: var(--text-primary);
-  font-size: 15px;
-  cursor: pointer;
-  transition: var(--transition);
-  text-align: left;
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+  background-color: transparent; border: 2px solid var(--accent); border-radius: var(--border-radius-md);
+  color: var(--text-primary); font-size: 15px; cursor: pointer; transition: var(--transition);
+  text-align: left; width: 100%;
 }
-
 .option-btn:hover { background-color: var(--accent-light); }
 .option-btn.selected { background-color: var(--accent); border-color: var(--accent-hover); }
-
-.option-label {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--border-radius-full);
-  background-color: var(--accent-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
+.option-label { width: 32px; height: 32px; border-radius: var(--border-radius-full); background-color: var(--accent-light); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
 .option-btn.selected .option-label { background-color: var(--accent-hover); color: white; }
 
 .nav-buttons { display: flex; gap: 10px; }
-
-.nav-btn {
-  flex: 1;
-  padding: 14px;
-  border-radius: var(--border-radius-lg);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-  border: 2px solid var(--accent);
-  background-color: transparent;
-  color: var(--text-primary);
-}
-
+.nav-btn { flex: 1; padding: 14px; border-radius: var(--border-radius-lg); font-size: 15px; font-weight: 600; cursor: pointer; transition: var(--transition); border: 2px solid var(--accent); background-color: transparent; color: var(--text-primary); }
 .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .next-btn, .submit-btn { background-color: var(--accent); }
 .next-btn:hover:not(:disabled), .submit-btn:hover:not(:disabled) { background-color: var(--accent-hover); }
 
-.question-dots {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: var(--accent-light);
-  border: 2px solid var(--accent);
-  cursor: pointer;
-  transition: var(--transition);
-}
-
+.question-dots { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.dot { width: 12px; height: 12px; border-radius: 50%; background-color: var(--accent-light); border: 2px solid var(--accent); cursor: pointer; transition: var(--transition); }
 .dot.answered { background-color: var(--accent); }
 .dot.current { background-color: var(--accent-hover); transform: scale(1.3); }
 
-.result-area {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  padding: 20px 0;
-}
+/* Hasil */
+.result-area { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
 
-.result-card {
-  width: 100%;
-  max-width: 480px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.score-comparison {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-
-.score-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  background-color: var(--bg-secondary);
-  padding: 16px 24px;
-  border-radius: var(--border-radius-md);
-  min-width: 100px;
-}
-
+.score-comparison { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.score-box { display: flex; flex-direction: column; align-items: center; gap: 4px; background-color: var(--bg-secondary); padding: 16px 24px; border-radius: var(--border-radius-md); min-width: 100px; }
 .score-box-label { font-size: 12px; color: var(--text-secondary); }
 .score-box-value { font-size: 32px; font-weight: 700; }
 .score-box-value.pre { color: var(--text-secondary); }
 .score-box-value.post { color: var(--accent-hover); }
 .score-arrow { font-size: 24px; color: var(--accent); }
 
-.improvement {
-  text-align: center;
-  padding: 10px 16px;
-  border-radius: var(--border-radius-md);
-  font-weight: 600;
-  font-size: 15px;
-}
-
+.improvement { text-align: center; padding: 10px 16px; border-radius: var(--border-radius-md); font-weight: 600; font-size: 15px; width: 100%; }
 .improvement.positive { background-color: #ccffcc55; color: #003300; }
 .improvement.negative { background-color: #ffcccc55; color: #7b0000; }
 
-.result-title { font-size: 22px; font-weight: 700; text-align: center; }
-.result-desc { font-size: 15px; color: var(--text-secondary); text-align: center; }
+.result-title { font-size: 22px; font-weight: 700; }
+.result-desc { font-size: 15px; color: var(--text-secondary); }
 
-.section-scores { display: flex; flex-direction: column; gap: 8px; }
-
-.section-score-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 16px;
-  background-color: var(--bg-secondary);
-  border-radius: var(--border-radius-md);
-  font-size: 14px;
-}
-
+.section-scores { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.section-score-item { display: flex; justify-content: space-between; padding: 10px 16px; background-color: var(--bg-secondary); border-radius: var(--border-radius-md); font-size: 14px; }
 .section-val { font-weight: 700; color: var(--accent-hover); }
 
-.explanations { display: flex; flex-direction: column; gap: 12px; }
-
-.explanation-item {
-  padding: 12px 16px;
-  border-radius: var(--border-radius-md);
-  border-left: 4px solid;
-}
-
+.explanations { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+.explanation-item { padding: 12px 16px; border-radius: var(--border-radius-md); border-left: 4px solid; text-align: left; }
 .explanation-item.correct { background-color: #ccffcc33; border-color: #00aa00; }
 .explanation-item.wrong { background-color: #ffcccc33; border-color: #cc0000; }
 .exp-question { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
 .exp-answer { font-size: 13px; margin-bottom: 4px; }
 .exp-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
 
-.btn-primary {
-  width: 100%;
-  padding: 16px;
-  background-color: var(--accent);
-  color: var(--text-primary);
-  border: none;
-  border-radius: var(--border-radius-lg);
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
+.btn-primary { width: 100%; padding: 16px; background-color: var(--accent); color: var(--text-primary); border: none; border-radius: var(--border-radius-lg); font-size: 16px; font-weight: 600; cursor: pointer; transition: var(--transition); }
 .btn-primary:hover { background-color: var(--accent-hover); }
-
-.btn-secondary {
-  width: 100%;
-  padding: 14px;
-  background-color: transparent;
-  color: var(--text-primary);
-  border: 2px solid var(--accent);
-  border-radius: var(--border-radius-lg);
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
+.btn-secondary { width: 100%; padding: 14px; background-color: transparent; color: var(--text-primary); border: 2px solid var(--accent); border-radius: var(--border-radius-lg); font-size: 15px; font-weight: 600; cursor: pointer; transition: var(--transition); }
 .btn-secondary:hover { background-color: var(--accent-light); }
 </style>
