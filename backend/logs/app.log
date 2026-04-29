@@ -202,3 +202,5 @@
 2026-04-29 13:51:56 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
 2026-04-29 14:04:29 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
 2026-04-29 14:04:33 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-29 14:12:07 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-29 14:12:11 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
