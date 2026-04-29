@@ -161,7 +161,7 @@ async def submit_post_test(
 # Simpan hasil kuesioner
 # ----------------------------------------------------------
 @router.post(
-    "/survey/submit",
+    "/submit",
     response_model=SurveyResultResponse,
     status_code=status.HTTP_201_CREATED,
     summary="Simpan hasil kuesioner",

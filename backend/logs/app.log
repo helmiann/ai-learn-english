@@ -204,3 +204,113 @@
 2026-04-29 14:04:33 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
 2026-04-29 14:12:07 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
 2026-04-29 14:12:11 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-29 14:21:20 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-29 14:21:24 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-29 20:51:36 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-29 20:51:40 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-29 21:39:18 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-29 21:39:22 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-29 21:46:09 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-29 21:46:13 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-29 23:34:06 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-29 23:34:11 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-29 23:35:12 | INFO     | services.user_service:create_user:57 | User baru dibuat: okl
+2026-04-29 23:35:12 | INFO     | api.routes.auth:register:47 | User baru terdaftar: okl
+2026-04-29 23:37:55 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-29 23:37:59 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-29 23:40:19 | WARNING  | services.user_service:authenticate:73 | Login gagal: password salah (okl)
+2026-04-30 05:19:24 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-30 05:19:29 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-30 05:22:29 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-30 05:22:33 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-30 05:23:21 | INFO     | services.user_service:create_user:57 | User baru dibuat: lok
+2026-04-30 05:23:21 | INFO     | api.routes.auth:register:47 | User baru terdaftar: lok
+2026-04-30 05:23:33 | INFO     | api.routes.auth:login:79 | Login berhasil: lok
+2026-04-30 05:24:00 | INFO     | api.routes.test:submit_pre_test:67 | Pre-test disimpan: user=12 score=35
+2026-04-30 05:24:09 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=12 user=12
+2026-04-30 05:24:09 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=12 user=12
+2026-04-30 05:24:10 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=12 pesan=1 ada_summary=False
+2026-04-30 05:24:10 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=12 user=12
+2026-04-30 05:24:12 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=778
+2026-04-30 05:24:12 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=12 token=778
+2026-04-30 05:24:12 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=12 user=12
+2026-04-30 05:24:19 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=13 user=12
+2026-04-30 05:24:19 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=13 user=12
+2026-04-30 05:24:20 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=13 pesan=1 ada_summary=False
+2026-04-30 05:24:20 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=13 user=12
+2026-04-30 05:24:21 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=610
+2026-04-30 05:24:21 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=13 token=610
+2026-04-30 05:24:21 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=13 user=12
+2026-04-30 05:24:54 | INFO     | api.routes.test:submit_post_test:155 | Post-test disimpan: user=12 score=25
+2026-04-30 05:29:58 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-30 05:30:02 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-30 05:33:19 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-04-30 05:33:23 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-04-30 05:33:53 | INFO     | api.routes.test:submit_survey:187 | Kuesioner disimpan: user=12 avg=3.0
+2026-04-30 05:35:28 | INFO     | services.user_service:create_user:57 | User baru dibuat: Jjj
+2026-04-30 05:35:28 | INFO     | api.routes.auth:register:47 | User baru terdaftar: Jjj
+2026-04-30 05:35:40 | INFO     | api.routes.auth:login:79 | Login berhasil: Jjj
+2026-04-30 05:36:06 | INFO     | api.routes.test:submit_pre_test:67 | Pre-test disimpan: user=13 score=25
+2026-04-30 05:36:14 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=14 user=13
+2026-04-30 05:36:15 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=14 user=13
+2026-04-30 05:36:15 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=14 user=13
+2026-04-30 05:36:15 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=14 pesan=1 ada_summary=False
+2026-04-30 05:36:17 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=603
+2026-04-30 05:36:17 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=14 token=603
+2026-04-30 05:36:17 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=14 user=13
+2026-04-30 05:39:42 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=14 user=13
+2026-04-30 05:41:18 | INFO     | api.routes.auth:login:79 | Login berhasil: lok
+2026-04-30 05:45:15 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=14 user=13
+2026-04-30 05:45:29 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=15 user=12
+2026-04-30 05:45:29 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=15 user=12
+2026-04-30 05:45:29 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=15 user=12
+2026-04-30 05:45:29 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=15 pesan=1 ada_summary=False
+2026-04-30 05:45:32 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=606
+2026-04-30 05:45:32 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=15 token=606
+2026-04-30 05:45:32 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=15 user=12
+2026-04-30 05:45:38 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=16 user=12
+2026-04-30 05:45:38 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=16 user=12
+2026-04-30 05:45:39 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=16 pesan=1 ada_summary=False
+2026-04-30 05:45:39 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=16 user=12
+2026-04-30 05:45:40 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=684
+2026-04-30 05:45:41 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=16 token=684
+2026-04-30 05:45:41 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=16 user=12
+2026-04-30 05:46:01 | WARNING  | services.user_service:authenticate:73 | Login gagal: password salah (Jjj)
+2026-04-30 05:46:15 | INFO     | api.routes.auth:login:79 | Login berhasil: Jjj
+2026-04-30 05:46:22 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=17 user=13
+2026-04-30 05:46:22 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=17 user=13
+2026-04-30 05:46:23 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=17 user=13
+2026-04-30 05:46:23 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=17 pesan=1 ada_summary=False
+2026-04-30 05:46:24 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=665
+2026-04-30 05:46:24 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=17 token=665
+2026-04-30 05:46:24 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=17 user=13
+2026-04-30 05:46:28 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=18 user=13
+2026-04-30 05:46:29 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=18 user=13
+2026-04-30 05:46:29 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=18 user=13
+2026-04-30 05:46:29 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=18 pesan=1 ada_summary=False
+2026-04-30 05:46:32 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=868
+2026-04-30 05:46:32 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=18 token=868
+2026-04-30 05:46:32 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=18 user=13
+2026-04-30 05:46:36 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=19 user=13
+2026-04-30 05:46:36 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=19 user=13
+2026-04-30 05:46:37 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=19 pesan=1 ada_summary=False
+2026-04-30 05:46:37 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=19 user=13
+2026-04-30 05:46:39 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=640
+2026-04-30 05:46:39 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=19 token=640
+2026-04-30 05:46:39 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=19 user=13
+2026-04-30 05:46:44 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=20 user=13
+2026-04-30 05:46:44 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=20 user=13
+2026-04-30 05:46:45 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=20 pesan=1 ada_summary=False
+2026-04-30 05:46:45 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=20 user=13
+2026-04-30 05:46:46 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=605
+2026-04-30 05:46:46 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=20 token=605
+2026-04-30 05:46:46 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=20 user=13
+2026-04-30 05:46:51 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=21 user=13
+2026-04-30 05:46:52 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=21 user=13
+2026-04-30 05:46:52 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=21 user=13
+2026-04-30 05:46:52 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=21 pesan=1 ada_summary=False
+2026-04-30 05:46:54 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=648
+2026-04-30 05:46:54 | INFO     | services.chat_service:send_message:102 | Pesan diproses: chat=21 token=648
+2026-04-30 05:46:54 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=21 user=13
+2026-04-30 05:47:41 | INFO     | api.routes.test:submit_post_test:155 | Post-test disimpan: user=13 score=45
+2026-04-30 05:48:04 | INFO     | api.routes.test:submit_survey:187 | Kuesioner disimpan: user=13 avg=3.0

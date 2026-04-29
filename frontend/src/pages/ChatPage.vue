@@ -143,6 +143,7 @@ async function handleSelectRecommendation(topic) {
 .chat-page {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;   /* ← dvh lebih akurat di mobile (memperhitungkan keyboard) */
   background-color: var(--bg-primary);
   display: flex;
   flex-direction: column;
@@ -214,6 +215,7 @@ async function handleSelectRecommendation(topic) {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-height: 0;   /* ← tambahkan ini, penting untuk flex scroll di mobile */
 }
 
 /* Welcome area */
@@ -245,9 +247,12 @@ async function handleSelectRecommendation(topic) {
 .messages-area {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 20px 20px 8px 20px;
   display: flex;
   flex-direction: column;
+  -webkit-overflow-scrolling: touch;  /* ← penting untuk iOS/Android */
+  overscroll-behavior: contain;
 }
 
 /* Typing indicator */

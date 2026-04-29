@@ -164,14 +164,18 @@ function handleLogout() {
   left: 0;
   width: var(--sidebar-width);
   height: 100vh;
+  height: 100dvh;              /* ← tambahkan untuk mobile */
   background-color: var(--bg-sidebar);
   display: flex;
   flex-direction: column;
   padding: 16px 12px;
+  padding-bottom: 32px;        /* ← tambahkan padding bawah */
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: 100;
   gap: 10px;
+  overflow-y: auto;            /* ← tambahkan agar sidebar bisa scroll */
+  -webkit-overflow-scrolling: touch;
 }
 
 .sidebar.open {
@@ -390,6 +394,8 @@ function handleLogout() {
 /* Footer logout */
 .sidebar-footer {
   padding-top: 4px;
+  padding-bottom: 20px;  /* ← tambahkan ini */
+  margin-top: auto;      /* ← tambahkan ini agar selalu di bawah */
 }
 
 .logout-btn {
