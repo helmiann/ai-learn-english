@@ -12,7 +12,6 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from core.config import settings
 from core.logging import setup_logging
 from db.database import init_db
-from api.routes import auth, chat, history
 from infrastructure.redis_client import init_redis, close_redis
 from services.grammar_checker.grammar_checker_service import grammar_checker
 from api.routes import auth, chat, history, test
@@ -33,7 +32,7 @@ async def lifespan(app: FastAPI):
 
     # --- Shutdown ---
     await close_redis()
-    grammar_checker.close()
+    #grammar_checker.close()
 
 
 # ----------------------------------------------------------
@@ -64,11 +63,11 @@ app.add_middleware(
 )
 
 # Trusted Host — keamanan tambahan
-if not settings.DEBUG:
-    app.add_middleware(
-        TrustedHostMiddleware,
-        allowed_hosts=["localhost", "127.0.0.1"],
-    )
+#if not settings.DEBUG:
+#    app.add_middleware(
+#        TrustedHostMiddleware,
+#        allowed_hosts=["localhost", "127.0.0.1"],
+#    )
 
 
 # ----------------------------------------------------------
