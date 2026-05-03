@@ -11,11 +11,34 @@ from sqlalchemy import select, delete
 from models.chats import Chat
 from models.chat_messages import ChatMessage
 from models.chat_summary import ChatSummary
-from schemas.chat import ChatResponse
 from schemas.message import MessageResponse
 from services.context_manager.context_manager import ContextManager
 from integration.llama_client.llama_client import LlamaClient
 from core.logging import logger
+
+
+# ----------------------------------------------------------
+# KEYWORD FILTER — Topik yang tidak diizinkan
+# ----------------------------------------------------------
+OUT_OF_CONTEXT_KEYWORDS = [
+    "bab lain", "topik lain", "materi lain", "pelajaran lain",
+    "future tense", "perfect tense", "continuous tense",
+    "passive voice", "conditional", "reported speech",
+    "conjunction", "pronoun", "adjective", "adverb",
+    "selain ini", "yang lain", "ganti topik", "ganti materi",
+    "belajar yang lain", "mau tanya yang lain",
+    "pelajaran berbeda", "bab berbeda", "topik berbeda",
+]
+
+REJECTION_MESSAGE = (
+    "Maaf, aku hanya bisa membantu belajar 4 materi grammar SMP:\n\n"
+    "1. Simple Present Tense\n"
+    "2. Simple Past Tense\n"
+    "3. Irregular Verbs\n"
+    "4. Imperative Sentences\n\n"
+    "Yuk kita fokus pada salah satu materi di atas! "
+    "Materi mana yang ingin kamu pelajari? 😊"
+)
 
 
 class ChatService:
@@ -60,6 +83,16 @@ class ChatService:
         return list(result.scalars().all())
 
     # ----------------------------------------------------------
+    # Cek apakah pesan keluar konteks
+    # ----------------------------------------------------------
+    def _is_out_of_context(self, content: str) -> bool:
+        content_lower = content.lower()
+        return any(
+            keyword in content_lower
+            for keyword in OUT_OF_CONTEXT_KEYWORDS
+        )
+
+    # ----------------------------------------------------------
     # Kirim pesan & dapatkan respons AI
     # ----------------------------------------------------------
     async def send_message(
@@ -79,16 +112,39 @@ class ChatService:
         await self.db.commit()
         await self.db.refresh(user_message)
 
-        # 2. Minta context manager siapkan konteks percakapan
+        # 2. Cek apakah pesan keluar konteks
+        if self._is_out_of_context(content):
+            logger.info(f"Pesan keluar konteks diblokir: chat={chat_id}")
+
+            ai_message = ChatMessage(
+                id_chats=chat_id,
+                role="assistant",
+                contents=REJECTION_MESSAGE,
+                token_used=0,
+            )
+            self.db.add(ai_message)
+            await self.db.commit()
+            await self.db.refresh(ai_message)
+
+            return MessageResponse(
+                id_chatmassages=ai_message.id_chatmassages,
+                id_chats=chat_id,
+                role="assistant",
+                contents=REJECTION_MESSAGE,
+                timestamp=ai_message.timestamp,
+                token_used=0,
+            )
+
+        # 3. Minta context manager siapkan konteks percakapan
         context = await self.context_manager.build_context(chat_id)
 
-        # 3. Kirim ke Llama API dan dapatkan respons
+        # 4. Kirim ke Llama API dan dapatkan respons
         ai_response_text, token_used = await self.llama.chat(
             context=context,
             user_message=content,
         )
 
-        # 4. Simpan respons AI ke database
+        # 5. Simpan respons AI ke database
         ai_message = ChatMessage(
             id_chats=chat_id,
             role="assistant",
@@ -99,9 +155,7 @@ class ChatService:
         await self.db.commit()
         await self.db.refresh(ai_message)
 
-        logger.info(
-            f"Pesan diproses: chat={chat_id} token={token_used}"
-        )
+        logger.info(f"Pesan diproses: chat={chat_id} token={token_used}")
 
         return MessageResponse(
             id_chatmassages=ai_message.id_chatmassages,
@@ -138,15 +192,12 @@ class ChatService:
     # Hapus chat beserta semua pesannya
     # ----------------------------------------------------------
     async def delete_chat(self, chat_id: int) -> None:
-        # Hapus pesan dulu (foreign key)
         await self.db.execute(
             delete(ChatMessage).where(ChatMessage.id_chats == chat_id)
         )
-        # Hapus summary
         await self.db.execute(
             delete(ChatSummary).where(ChatSummary.id_chats == chat_id)
         )
-        # Hapus chat
         await self.db.execute(
             delete(Chat).where(Chat.id_chats == chat_id)
         )
