@@ -18,16 +18,15 @@ from core.logging import logger
 
 
 # ----------------------------------------------------------
-# KEYWORD FILTER — Topik yang tidak diizinkan
+# KEYWORD FILTER — Topik di luar 4 materi
 # ----------------------------------------------------------
 OUT_OF_CONTEXT_KEYWORDS = [
-    "bab lain", "topik lain", "materi lain", "pelajaran lain",
     "future tense", "perfect tense", "continuous tense",
     "passive voice", "conditional", "reported speech",
     "conjunction", "pronoun", "adjective", "adverb",
-    "selain ini", "yang lain", "ganti topik", "ganti materi",
-    "belajar yang lain", "mau tanya yang lain",
     "pelajaran berbeda", "bab berbeda", "topik berbeda",
+    "bab lain", "pelajaran lain", "ganti pelajaran",
+    "selain grammar", "di luar materi",
 ]
 
 REJECTION_MESSAGE = (
@@ -38,6 +37,39 @@ REJECTION_MESSAGE = (
     "4. Imperative Sentences\n\n"
     "Yuk kita fokus pada salah satu materi di atas! "
     "Materi mana yang ingin kamu pelajari? 😊"
+)
+
+# ----------------------------------------------------------
+# TOPIC KEYWORDS — Deteksi topik dari pesan
+# ----------------------------------------------------------
+TOPIC_KEYWORDS = {
+    "simple_present": [
+        "simple present", "present tense", "present simple",
+        "kalimat sekarang", "present",
+    ],
+    "simple_past": [
+        "simple past", "past tense", "past simple",
+        "kalimat lampau", "kalimat lalu", "waktu lampau",
+    ],
+    "irregular_verbs": [
+        "irregular verb", "irregular verbs", "kata kerja tidak beraturan",
+        "verb 2", "verb 3", "bentuk kedua", "bentuk ketiga",
+        "irregular", "kata kerja beraturan",
+    ],
+    "imperative": [
+        "imperative", "kalimat perintah", "kalimat larangan",
+        "kalimat permintaan", "perintah", "larangan",
+    ],
+}
+
+TOPIC_SWITCH_MESSAGE = (
+    "Sepertinya kamu ingin berpindah ke materi lain. "
+    "Untuk menjaga fokus belajar, sebaiknya selesaikan dulu materi "
+    "yang sedang kamu pelajari sekarang ya! 😊\n\n"
+    "Kalau memang ingin belajar materi lain, kamu bisa:\n"
+    "➡️ Buat percakapan baru dari menu sidebar\n\n"
+    "Yuk kita lanjutkan belajar di sini dulu! "
+    "Ada yang ingin kamu tanyakan tentang materi ini? 💪"
 )
 
 
@@ -83,13 +115,74 @@ class ChatService:
         return list(result.scalars().all())
 
     # ----------------------------------------------------------
-    # Cek apakah pesan keluar konteks
+    # Deteksi topik dari teks pesan
+    # ----------------------------------------------------------
+    def _detect_topic(self, content: str) -> Optional[str]:
+        """Deteksi topik dari sebuah teks pesan."""
+        content_lower = content.lower()
+        for topic, keywords in TOPIC_KEYWORDS.items():
+            if any(kw in content_lower for kw in keywords):
+                return topic
+        return None
+
+    # ----------------------------------------------------------
+    # Deteksi topik yang sedang dipelajari di chat ini
+    # ----------------------------------------------------------
+    async def _get_current_topic(self, chat_id: int) -> Optional[str]:
+        """
+        Deteksi topik yang sedang dipelajari di chat ini
+        berdasarkan pesan-pesan pertama di chat.
+        """
+        result = await self.db.execute(
+            select(ChatMessage)
+            .where(ChatMessage.id_chats == chat_id)
+            .order_by(ChatMessage.timestamp.asc())
+            .limit(6)  # Cek 6 pesan pertama
+        )
+        messages = list(result.scalars().all())
+
+        for msg in messages:
+            topic = self._detect_topic(msg.contents)
+            if topic:
+                return topic
+        return None
+
+    # ----------------------------------------------------------
+    # Cek apakah pesan keluar konteks (di luar 4 materi)
     # ----------------------------------------------------------
     def _is_out_of_context(self, content: str) -> bool:
         content_lower = content.lower()
         return any(
             keyword in content_lower
             for keyword in OUT_OF_CONTEXT_KEYWORDS
+        )
+
+    # ----------------------------------------------------------
+    # Simpan pesan AI ke database dan return response
+    # ----------------------------------------------------------
+    async def _save_ai_message(
+        self,
+        chat_id: int,
+        contents: str,
+        token_used: int = 0,
+    ) -> MessageResponse:
+        ai_message = ChatMessage(
+            id_chats=chat_id,
+            role="assistant",
+            contents=contents,
+            token_used=token_used,
+        )
+        self.db.add(ai_message)
+        await self.db.commit()
+        await self.db.refresh(ai_message)
+
+        return MessageResponse(
+            id_chatmassages=ai_message.id_chatmassages,
+            id_chats=chat_id,
+            role="assistant",
+            contents=contents,
+            timestamp=ai_message.timestamp,
+            token_used=token_used,
         )
 
     # ----------------------------------------------------------
@@ -112,58 +205,39 @@ class ChatService:
         await self.db.commit()
         await self.db.refresh(user_message)
 
-        # 2. Cek apakah pesan keluar konteks
+        # 2. Cek apakah pesan keluar dari 4 materi sama sekali
         if self._is_out_of_context(content):
             logger.info(f"Pesan keluar konteks diblokir: chat={chat_id}")
-
-            ai_message = ChatMessage(
-                id_chats=chat_id,
-                role="assistant",
-                contents=REJECTION_MESSAGE,
-                token_used=0,
-            )
-            self.db.add(ai_message)
-            await self.db.commit()
-            await self.db.refresh(ai_message)
-
-            return MessageResponse(
-                id_chatmassages=ai_message.id_chatmassages,
-                id_chats=chat_id,
-                role="assistant",
-                contents=REJECTION_MESSAGE,
-                timestamp=ai_message.timestamp,
-                token_used=0,
+            return await self._save_ai_message(
+                chat_id, REJECTION_MESSAGE
             )
 
-        # 3. Minta context manager siapkan konteks percakapan
+        # 3. Cek apakah siswa minta ganti topik dalam 4 materi
+        requested_topic = self._detect_topic(content)
+        if requested_topic:
+            current_topic = await self._get_current_topic(chat_id)
+            if current_topic and current_topic != requested_topic:
+                logger.info(
+                    f"Ganti topik diblokir: chat={chat_id} "
+                    f"current={current_topic} → requested={requested_topic}"
+                )
+                return await self._save_ai_message(
+                    chat_id, TOPIC_SWITCH_MESSAGE
+                )
+
+        # 4. Minta context manager siapkan konteks percakapan
         context = await self.context_manager.build_context(chat_id)
 
-        # 4. Kirim ke Llama API dan dapatkan respons
+        # 5. Kirim ke Llama API dan dapatkan respons
         ai_response_text, token_used = await self.llama.chat(
             context=context,
             user_message=content,
         )
 
-        # 5. Simpan respons AI ke database
-        ai_message = ChatMessage(
-            id_chats=chat_id,
-            role="assistant",
-            contents=ai_response_text,
-            token_used=token_used,
-        )
-        self.db.add(ai_message)
-        await self.db.commit()
-        await self.db.refresh(ai_message)
-
+        # 6. Simpan respons AI ke database
         logger.info(f"Pesan diproses: chat={chat_id} token={token_used}")
-
-        return MessageResponse(
-            id_chatmassages=ai_message.id_chatmassages,
-            id_chats=chat_id,
-            role="assistant",
-            contents=ai_response_text,
-            timestamp=ai_message.timestamp,
-            token_used=token_used,
+        return await self._save_ai_message(
+            chat_id, ai_response_text, token_used
         )
 
     # ----------------------------------------------------------
