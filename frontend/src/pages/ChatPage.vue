@@ -19,7 +19,7 @@
         </svg>
       </button>
 
-      <!-- Avatar dengan huruf awal username -->
+      <!-- Avatar huruf awal username -->
       <div class="user-avatar" @click="sidebarOpen = true">
         {{ userInitial }}
       </div>
@@ -30,7 +30,20 @@
 
       <!-- Tampilan awal — belum ada chat aktif -->
       <div v-if="!chatStore.currentChatId" class="welcome-area">
+
+        <!-- Petunjuk penggunaan -->
+        <div class="guide-box">
+          <p class="guide-title">💡 Cara menggunakan chatbot:</p>
+          <ol class="guide-list">
+            <li>Pilih salah satu topik di bawah untuk mulai belajar</li>
+            <li>Baca penjelasan dari AI dengan seksama</li>
+            <li>Ketik jawaban atau pertanyaanmu di <strong>kolom chat di bawah</strong> 👇</li>
+            <li>Tekan Enter atau tombol kirim untuk mengirim</li>
+          </ol>
+        </div>
+
         <p class="welcome-text">Pilih topik untuk mulai belajar:</p>
+
         <div class="recommendations">
           <RecommendationCard
             v-for="(rec, i) in defaultRecommendations"
@@ -39,6 +52,7 @@
             @select="handleSelectRecommendation"
           />
         </div>
+
       </div>
 
       <!-- Area pesan chat -->
@@ -61,7 +75,11 @@
     </div>
 
     <!-- Input bar -->
-    <ChatInput :loading="chatStore.loading" @send="handleSendMessage" />
+    <ChatInput
+      :loading="chatStore.loading"
+      :placeholder="inputPlaceholder"
+      @send="handleSendMessage"
+    />
 
   </div>
 </template>
@@ -92,6 +110,17 @@ const userInitial = computed(() => {
   return name.charAt(0).toUpperCase()
 })
 
+// Placeholder input berubah sesuai kondisi
+const inputPlaceholder = computed(() => {
+  if (!chatStore.currentChatId) {
+    return 'Pilih topik dulu atau ketik pertanyaanmu...'
+  }
+  if (chatStore.loading) {
+    return 'AI sedang menjawab...'
+  }
+  return 'Tulis jawabanmu atau pertanyaanmu di sini...'
+})
+
 const defaultRecommendations = ref([
   'Simple Present Tense',
   'Simple Past Tense',
@@ -112,6 +141,7 @@ watch(() => route.params.id, async (newId) => {
   }
 })
 
+// Auto scroll ke bawah saat ada pesan baru
 watch(() => chatStore.messages.length, async () => {
   await nextTick()
   if (messagesArea.value) {
@@ -143,7 +173,7 @@ async function handleSelectRecommendation(topic) {
 .chat-page {
   width: 100vw;
   height: 100vh;
-  height: 100dvh;   /* ← dvh lebih akurat di mobile (memperhitungkan keyboard) */
+  height: 100dvh;
   background-color: var(--bg-primary);
   display: flex;
   flex-direction: column;
@@ -182,11 +212,8 @@ async function handleSelectRecommendation(topic) {
   transition: var(--transition);
 }
 
-.icon-btn:hover {
-  background-color: var(--accent);
-}
+.icon-btn:hover { background-color: var(--accent); }
 
-/* Avatar huruf awal username */
 .user-avatar {
   width: 44px;
   height: 44px;
@@ -215,7 +242,7 @@ async function handleSelectRecommendation(topic) {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 0;   /* ← tambahkan ini, penting untuk flex scroll di mobile */
+  min-height: 0;
 }
 
 /* Welcome area */
@@ -224,8 +251,39 @@ async function handleSelectRecommendation(topic) {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 24px 20px;
-  gap: 16px;
+  padding: 16px 20px;
+  gap: 14px;
+  overflow-y: auto;
+}
+
+/* Kotak petunjuk */
+.guide-box {
+  background-color: var(--bg-secondary);
+  border-radius: var(--border-radius-md);
+  padding: 14px 16px;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.guide-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.guide-list {
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.guide-list li {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.5;
 }
 
 .welcome-text {
@@ -237,7 +295,7 @@ async function handleSelectRecommendation(topic) {
 .recommendations {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
@@ -251,7 +309,7 @@ async function handleSelectRecommendation(topic) {
   padding: 20px 20px 8px 20px;
   display: flex;
   flex-direction: column;
-  -webkit-overflow-scrolling: touch;  /* ← penting untuk iOS/Android */
+  -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
 }
 
@@ -262,9 +320,7 @@ async function handleSelectRecommendation(topic) {
   margin-bottom: 16px;
 }
 
-.bubble-wrapper.ai {
-  justify-content: flex-start;
-}
+.bubble-wrapper.ai { justify-content: flex-start; }
 
 .typing {
   display: flex;

@@ -1,19 +1,11 @@
 // ============================================================
 //  ENGLISH GRAMMAR CHATBOT — Soal Pre-test & Post-test
 //  File: frontend/src/data/questions.js
-//
-//  20 soal pilihan ganda, 5 soal per materi:
-//  1. Simple Present Tense (soal 1-5)
-//  2. Simple Past Tense (soal 6-10)
-//  3. Irregular Verbs (soal 11-15)
-//  4. Imperative Sentences (soal 16-20)
 // ============================================================
 
 export const questions = [
 
-  // ----------------------------------------------------------
-  // BAGIAN 1 — Simple Present Tense
-  // ----------------------------------------------------------
+  // Simple Present Tense (soal 1-5)
   {
     id: 1,
     section: "Simple Present Tense",
@@ -55,9 +47,7 @@ export const questions = [
     explanation: "Kalimat negatif Simple Present Tense untuk orang ketiga tunggal menggunakan 'does not'.",
   },
 
-  // ----------------------------------------------------------
-  // BAGIAN 2 — Simple Past Tense
-  // ----------------------------------------------------------
+  // Simple Past Tense (soal 6-10)
   {
     id: 6,
     section: "Simple Past Tense",
@@ -99,9 +89,7 @@ export const questions = [
     explanation: "Kalimat tanya Simple Past Tense menggunakan 'Did' di awal kalimat.",
   },
 
-  // ----------------------------------------------------------
-  // BAGIAN 3 — Irregular Verbs
-  // ----------------------------------------------------------
+  // Irregular Verbs (soal 11-15)
   {
     id: 11,
     section: "Irregular Verbs",
@@ -143,9 +131,7 @@ export const questions = [
     explanation: "'Leave' adalah irregular verb. Bentuk past tense-nya adalah 'left', bukan 'leaved'.",
   },
 
-  // ----------------------------------------------------------
-  // BAGIAN 4 — Imperative Sentences
-  // ----------------------------------------------------------
+  // Imperative Sentences (soal 16-20)
   {
     id: 16,
     section: "Imperative Sentences",
@@ -157,7 +143,7 @@ export const questions = [
       "The door is opened.",
     ],
     answer: "Open the door, please.",
-    explanation: "Kalimat imperatif dimulai langsung dengan kata kerja (verb) tanpa subjek. 'Open the door, please' adalah contoh yang benar.",
+    explanation: "Kalimat imperatif dimulai langsung dengan kata kerja (verb) tanpa subjek.",
   },
   {
     id: 17,
@@ -170,7 +156,7 @@ export const questions = [
       "No close the window.",
     ],
     answer: "Don't close the window.",
-    explanation: "Kalimat imperatif negatif dibentuk dengan menambahkan 'Don't' (Do not) di depan kata kerja.",
+    explanation: "Kalimat imperatif negatif dibentuk dengan menambahkan 'Don't' di depan kata kerja.",
   },
   {
     id: 18,
@@ -178,7 +164,7 @@ export const questions = [
     question: "___ quiet in the library!",
     options: ["Be", "Is", "Are", "Am"],
     answer: "Be",
-    explanation: "Imperatif dengan kata sifat atau kata benda menggunakan 'Be' di awal kalimat.",
+    explanation: "Imperatif dengan kata sifat menggunakan 'Be' di awal kalimat.",
   },
   {
     id: 19,
@@ -191,7 +177,7 @@ export const questions = [
       "Doesn't run in the hallway.",
     ],
     answer: "Don't run in the hallway.",
-    explanation: "Kalimat negatif imperatif yang benar adalah 'Don't + verb (base form)'. Jadi 'Don't run' bukan 'Don't running'.",
+    explanation: "Kalimat negatif imperatif yang benar adalah 'Don't + verb (base form)'.",
   },
   {
     id: 20,
@@ -199,15 +185,14 @@ export const questions = [
     question: "Your teacher says: '___ your book to page 10.' What is the correct word?",
     options: ["Opens", "Opened", "Open", "Opening"],
     answer: "Open",
-    explanation: "Kalimat imperatif menggunakan kata kerja bentuk dasar (base form) tanpa tambahan apapun.",
+    explanation: "Kalimat imperatif menggunakan kata kerja bentuk dasar (base form).",
   },
 ]
 
 // ----------------------------------------------------------
-// HELPER — Hitung skor dari jawaban
+// HELPER — Hitung skor total
 // ----------------------------------------------------------
 export function calculateScore(answers) {
-  // answers: { [question_id]: "jawaban_siswa" }
   let correct = 0
   questions.forEach(q => {
     if (answers[q.id] === q.answer) correct++
@@ -216,12 +201,11 @@ export function calculateScore(answers) {
     correct,
     total: questions.length,
     score: Math.round((correct / questions.length) * 100),
-    percentage: `${Math.round((correct / questions.length) * 100)}%`,
   }
 }
 
 // ----------------------------------------------------------
-// HELPER — Nilai per section
+// HELPER — Hitung skor per section
 // ----------------------------------------------------------
 export function calculateScoreBySection(answers) {
   const sections = {}
@@ -235,4 +219,17 @@ export function calculateScoreBySection(answers) {
     }
   })
   return sections
+}
+
+// ----------------------------------------------------------
+// HELPER — Hitung skor per materi untuk dikirim ke backend
+// ----------------------------------------------------------
+export function calculateSectionScores(answers) {
+  const bySection = calculateScoreBySection(answers)
+  return {
+    simple_present: bySection['Simple Present Tense']?.correct ?? 0,
+    simple_past: bySection['Simple Past Tense']?.correct ?? 0,
+    irregular_verbs: bySection['Irregular Verbs']?.correct ?? 0,
+    imperative: bySection['Imperative Sentences']?.correct ?? 0,
+  }
 }

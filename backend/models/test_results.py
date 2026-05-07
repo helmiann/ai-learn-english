@@ -1,12 +1,11 @@
 # ============================================================
 #  ENGLISH GRAMMAR CHATBOT — Test Results Model
 #  File: backend/models/test_results.py
-#  Tabel: test_results
 # ============================================================
 
 from datetime import datetime, timezone
-from sqlalchemy import Integer, String, Float, JSON, ForeignKey, DateTime
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import Integer, JSON, ForeignKey, DateTime
+from sqlalchemy.orm import Mapped, mapped_column
 from models.base import Base
 
 
@@ -21,14 +20,25 @@ class TestResult(Base):
         index=True,
     )
     test_type: Mapped[str] = mapped_column(
-        String(10),
+        Integer,
         nullable=False,
         # Nilai: "pre" atau "post"
     )
+
+    # Nilai total
     score: Mapped[int] = mapped_column(Integer, nullable=False)
     correct: Mapped[int] = mapped_column(Integer, nullable=False)
     total: Mapped[int] = mapped_column(Integer, nullable=False)
+
+    # Nilai per materi (dari 5, karena 5 soal per materi)
+    score_simple_present: Mapped[int] = mapped_column(Integer, nullable=True, default=0)
+    score_simple_past: Mapped[int] = mapped_column(Integer, nullable=True, default=0)
+    score_irregular_verbs: Mapped[int] = mapped_column(Integer, nullable=True, default=0)
+    score_imperative: Mapped[int] = mapped_column(Integer, nullable=True, default=0)
+
+    # Jawaban lengkap dalam JSON
     answers: Mapped[dict] = mapped_column(JSON, nullable=True)
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),

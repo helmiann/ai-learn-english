@@ -1,7 +1,6 @@
 # ============================================================
 #  ENGLISH GRAMMAR CHATBOT — Test & Survey Routes
 #  File: backend/api/routes/test.py
-#  Prefix: /api/test & /api/survey
 # ============================================================
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -26,7 +25,6 @@ router = APIRouter()
 
 # ----------------------------------------------------------
 # POST /api/test/pre-test
-# Simpan hasil pre-test
 # ----------------------------------------------------------
 @router.post(
     "/pre-test",
@@ -58,6 +56,10 @@ async def submit_pre_test(
         score=data.score,
         correct=data.correct,
         total=data.total,
+        score_simple_present=data.section_scores.simple_present,
+        score_simple_past=data.section_scores.simple_past,
+        score_irregular_verbs=data.section_scores.irregular_verbs,
+        score_imperative=data.section_scores.imperative,
         answers=data.answers,
     )
     db.add(result)
@@ -70,7 +72,6 @@ async def submit_pre_test(
 
 # ----------------------------------------------------------
 # GET /api/test/pre-test/check
-# Cek apakah sudah pernah pre-test
 # ----------------------------------------------------------
 @router.get(
     "/pre-test/check",
@@ -88,7 +89,6 @@ async def check_pre_test(
         )
     )
     existing = result.scalar_one_or_none()
-
     return TestCheckResponse(
         already_taken=existing is not None,
         score=existing.score if existing else None,
@@ -97,7 +97,6 @@ async def check_pre_test(
 
 # ----------------------------------------------------------
 # GET /api/test/pre-test/result
-# Ambil hasil pre-test untuk perbandingan di post-test
 # ----------------------------------------------------------
 @router.get(
     "/pre-test/result",
@@ -115,19 +114,16 @@ async def get_pre_test_result(
         )
     )
     existing = result.scalar_one_or_none()
-
     if not existing:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Pre-test belum dikerjakan",
         )
-
     return existing
 
 
 # ----------------------------------------------------------
 # POST /api/test/post-test
-# Simpan hasil post-test
 # ----------------------------------------------------------
 @router.post(
     "/post-test",
@@ -146,6 +142,10 @@ async def submit_post_test(
         score=data.score,
         correct=data.correct,
         total=data.total,
+        score_simple_present=data.section_scores.simple_present,
+        score_simple_past=data.section_scores.simple_past,
+        score_irregular_verbs=data.section_scores.irregular_verbs,
+        score_imperative=data.section_scores.imperative,
         answers=data.answers,
     )
     db.add(result)
@@ -157,8 +157,7 @@ async def submit_post_test(
 
 
 # ----------------------------------------------------------
-# POST /api/survey/submit
-# Simpan hasil kuesioner
+# POST /api/survey/submit (dipakai dengan prefix /api/survey)
 # ----------------------------------------------------------
 @router.post(
     "/submit",

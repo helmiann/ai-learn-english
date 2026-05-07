@@ -144,7 +144,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { questions, calculateScore, calculateScoreBySection } from '@/data/questions'
+import { questions, calculateScore, calculateScoreBySection, calculateSectionScores } from '@/data/questions'
 import api from '@/services/api'
 
 const router = useRouter()
@@ -181,8 +181,11 @@ async function submitTest() {
       score: result.value.score,
       correct: result.value.correct,
       total: result.value.total,
+      section_scores: calculateSectionScores(answers.value),  // ← tambahkan
     })
-  } catch (err) { console.error('Gagal simpan post-test:', err) }
+  } catch (err) {
+    console.error('Gagal simpan post-test:', err)
+  }
   showResult.value = true
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }

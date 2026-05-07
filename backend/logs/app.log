@@ -418,3 +418,45 @@
 2026-05-03 18:46:05 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=2242
 2026-05-03 18:46:05 | INFO     | services.chat_service:send_message:158 | Pesan diproses: chat=25 token=2242
 2026-05-03 18:46:05 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=25 user=16
+2026-05-03 18:51:02 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-05-03 18:51:06 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-05-03 18:51:18 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=25 user=16
+2026-05-03 18:51:24 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=26 user=16
+2026-05-03 18:51:25 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=26 user=16
+2026-05-03 18:51:26 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=26 pesan=1 ada_summary=False
+2026-05-03 18:51:28 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=26 user=16
+2026-05-03 18:51:30 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=896
+2026-05-03 18:51:30 | INFO     | services.chat_service:send_message:238 | Pesan diproses: chat=26 token=896
+2026-05-03 18:51:30 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=26 user=16
+2026-05-03 18:52:05 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=26 pesan=3 ada_summary=False
+2026-05-03 18:52:07 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=1128
+2026-05-03 18:52:07 | INFO     | services.chat_service:send_message:238 | Pesan diproses: chat=26 token=1128
+2026-05-03 18:52:07 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=26 user=16
+2026-05-03 18:52:51 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=26 pesan=5 ada_summary=False
+2026-05-03 18:52:53 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=1317
+2026-05-03 18:52:53 | INFO     | services.chat_service:send_message:238 | Pesan diproses: chat=26 token=1317
+2026-05-03 18:52:53 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=26 user=16
+2026-05-03 18:53:22 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=26 pesan=7 ada_summary=False
+2026-05-03 18:53:25 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=1519
+2026-05-03 18:53:25 | INFO     | services.chat_service:send_message:238 | Pesan diproses: chat=26 token=1519
+2026-05-03 18:53:25 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=26 user=16
+2026-05-03 18:53:49 | INFO     | services.chat_service:send_message:220 | Ganti topik diblokir: chat=26 current=imperative → requested=irregular_verbs
+2026-05-03 18:53:49 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=26 user=16
+2026-05-05 05:38:00 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-05-05 05:38:04 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-05-05 05:40:13 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-05-05 05:40:17 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-05-05 05:41:42 | INFO     | core.logging:setup_logging:64 | Logging aktif | level=INFO | env=development
+2026-05-05 05:41:47 | WARNING  | infrastructure.redis_client:init_redis:39 | Redis tidak tersedia: Error 22 connecting to localhost:6379. 22.. Aplikasi tetap berjalan tanpa cache.
+2026-05-05 05:42:00 | INFO     | api.routes.auth:login:79 | Login berhasil: test
+2026-05-05 05:42:27 | INFO     | api.routes.chat:create_chat:44 | Chat baru dibuat: id=27 user=16
+2026-05-05 05:42:27 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=27 user=16
+2026-05-05 05:42:28 | INFO     | services.context_manager.context_manager:build_context:75 | Konteks siap: chat=27 pesan=1 ada_summary=False
+2026-05-05 05:42:29 | INFO     | api.routes.history:get_chat_history:50 | Riwayat diambil: chat=27 user=16
+2026-05-05 05:42:30 | INFO     | integration.llama_client.llama_client:_send_request:95 | Llama API berhasil: token_used=921
+2026-05-05 05:42:30 | INFO     | services.chat_service:send_message:238 | Pesan diproses: chat=27 token=921
+2026-05-05 05:42:30 | INFO     | api.routes.chat:send_message:84 | Pesan dikirim: chat=27 user=16
+2026-05-05 05:45:55 | INFO     | api.routes.test:submit_post_test:155 | Post-test disimpan: user=16 score=25
+2026-05-05 05:46:19 | INFO     | api.routes.test:submit_survey:187 | Kuesioner disimpan: user=16 avg=3.0
+2026-05-05 05:46:56 | INFO     | api.routes.test:submit_post_test:155 | Post-test disimpan: user=16 score=15
+2026-05-05 05:47:21 | INFO     | api.routes.test:submit_survey:187 | Kuesioner disimpan: user=16 avg=3.0
