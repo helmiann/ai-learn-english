@@ -4,7 +4,7 @@
 # ============================================================
 
 from datetime import datetime, timezone
-from sqlalchemy import Integer, JSON, ForeignKey, DateTime
+from sqlalchemy import Integer, JSON, ForeignKey, DateTime, String
 from sqlalchemy.orm import Mapped, mapped_column
 from models.base import Base
 
@@ -20,7 +20,7 @@ class TestResult(Base):
         index=True,
     )
     test_type: Mapped[str] = mapped_column(
-        Integer,
+        String(10),
         nullable=False,
         # Nilai: "pre" atau "post"
     )

@@ -72,17 +72,20 @@ router.beforeEach(async (to, from, next) => {
   }
 
   // Cek pre-test sebelum masuk chat
-  if (isLoggedIn && (to.name === 'Chat' || to.name === 'ChatDetail')) {
-    try {
-      const response = await api.get('/test/pre-test/check')
-      if (!response.data.already_taken) {
-        return next({ name: 'PreTest' })
-      }
-    } catch {
-      // API error → biarkan masuk chat
+if (isLoggedIn && (to.name === 'Chat' || to.name === 'ChatDetail')) {
+  try {
+    const token = localStorage.getItem('token')
+    const response = await api.get('/test/pre-test/check', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    console.log('Pre-test check:', response.data)  // ← tambah ini
+    if (!response.data.already_taken) {
+      return next({ name: 'PreTest' })
     }
+  } catch (err) {
+    console.log('Pre-test check error:', err)  // ← tambah ini
   }
-
+}
   next()
 })
 

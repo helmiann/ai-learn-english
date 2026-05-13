@@ -53,11 +53,11 @@
           @click="handleRegister"
         >
           <span v-if="authStore.loading">Mendaftar...</span>
-          <span v-else>daftar</span>
+          <span v-else>Daftar</span>
         </button>
 
         <p class="register-link" @click="goToLogin">
-          Sudah punya akun? <strong>log in</strong>
+          Sudah punya akun? <strong>Masuk</strong>
         </p>
 
       </div>

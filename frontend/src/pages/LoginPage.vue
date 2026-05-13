@@ -39,11 +39,11 @@
           @click="handleLogin"
         >
           <span v-if="authStore.loading">Masuk...</span>
-          <span v-else>log in</span>
+          <span v-else>Masuk</span>
         </button>
 
         <!-- Link ke Register -->
-        <p class="register-link" @click="goToRegister">sign in</p>
+        <p class="register-link" @click="goToRegister">Daftar</p>
 
       </div>
     </div>
