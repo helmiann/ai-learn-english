@@ -36,6 +36,7 @@ class UserService:
     # Ambil user berdasarkan username
     # ----------------------------------------------------------
     async def get_by_username(self, username: str) -> Optional[User]:
+        username = username.strip().lower()
         result = await self.db.execute(
             select(User).where(User.username == username)
         )
@@ -46,7 +47,7 @@ class UserService:
     # ----------------------------------------------------------
     async def create_user(self, user_data: UserCreate) -> User:
         user = User(
-            username=user_data.username,
+            username=user_data.username.strip().lower(),
             password_hash=hash_password(user_data.password),
             kelas=user_data.kelas,
             sekolah=user_data.sekolah,
@@ -63,6 +64,7 @@ class UserService:
     async def authenticate(
         self, username: str, password: str
     ) -> Optional[User]:
+        username = username.strip().lower()
         user = await self.get_by_username(username)
 
         if not user:
