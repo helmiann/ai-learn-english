@@ -260,21 +260,21 @@ async function handleSelectRecommendation(topic) {
 .guide-box {
   background-color: var(--bg-secondary);
   border-radius: var(--border-radius-md);
-  padding: 14px 16px;
+  padding: 18px 20px;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
 }
 
 .guide-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .guide-list {
-  padding-left: 18px;
+  padding-left: 15px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -287,15 +287,16 @@ async function handleSelectRecommendation(topic) {
 }
 
 .welcome-text {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-secondary);
   text-align: center;
+  font-weight: 600; 
 }
 
 .recommendations {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 11px;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;

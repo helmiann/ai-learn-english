@@ -23,7 +23,8 @@ defineEmits(['select'])
   border: 2px solid var(--accent);
   border-radius: var(--border-radius-lg);
   color: var(--text-primary);
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 600;
   text-align: left;
   cursor: pointer;
   transition: var(--transition);
